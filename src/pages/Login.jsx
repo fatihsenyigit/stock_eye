@@ -10,13 +10,13 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
-import { login } from "../services/apiRequest";
+// import { login } from "../services/useApiRequest";
+import useApiRequest from "../services/useApiRequest";
 
 const Login = () => {
+  const { login } = useApiRequest();
   const loginSchema = object({
     // email: string().email().required(),
-
-
     email: string()
       .email("gecerli bir email giriniz")
       .required("email zorunludur"),
@@ -63,9 +63,9 @@ const Login = () => {
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
               // todo ; post(login), form resetleme, navigate, tostafy basarili yada basarisiz icin, global state tin guncellenmesi
-              login(values)
-              actions.resetForm()
-              actions.setSubmitting()
+              login(values);
+              actions.resetForm();
+              actions.setSubmitting();
             }}
           >
             {({
