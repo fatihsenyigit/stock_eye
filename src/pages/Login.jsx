@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
+import { login } from "../services/apiRequest";
 
 const Login = () => {
   const loginSchema = object({
@@ -62,9 +63,19 @@ const Login = () => {
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
               // todo ; post(login), form resetleme, navigate, tostafy basarili yada basarisiz icin, global state tin guncellenmesi
+              login(values)
+              actions.resetForm()
+              actions.setSubmitting()
             }}
           >
-            {({ values, errors, handleBlur, handleChange, touched }) => (
+            {({
+              values,
+              errors,
+              handleBlur,
+              handleChange,
+              touched,
+              isSubmitting,
+            }) => (
               <Form>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
@@ -91,7 +102,11 @@ const Login = () => {
                     error={touched.password && Boolean(errors.password)}
                     helperText={touched.password && errors.password}
                   />
-                  <Button variant="contained" type="submit">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
                     Submit
                   </Button>
                 </Box>
