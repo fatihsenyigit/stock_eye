@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom"
 import RegisterForm, { registerSchema } from "../components/RegisterForm";
 import { Formik } from "formik";
 import useApiRequest from "../services/useApiRequest";
-import TextField from "@mui/material/TextField"
 
 const Register = () => {
   const navigate = useNavigate()
@@ -62,7 +61,7 @@ const Register = () => {
             email: '',
             password: '',
           }}
-          validdationSchema={registerSchema}
+          validationSchema={registerSchema}
           onSubmit={(values, actions)=> {
             register(values)
             actions.resetForm()
