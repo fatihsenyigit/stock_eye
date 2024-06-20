@@ -106,7 +106,7 @@ function Dashboard(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{flexGrow:1}}>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Stock Eye
           </Typography>
 
@@ -137,6 +137,7 @@ function Dashboard(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "secondary.main",
             },
           }}
         >
@@ -149,6 +150,7 @@ function Dashboard(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "secondary.main",
             },
           }}
           open
