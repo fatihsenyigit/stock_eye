@@ -46,6 +46,7 @@ import Button from "@mui/material/Button"
 import { useSelector } from "react-redux"
 import useApiRequest from "../services/useApiRequest"
 import MenuList from "../components/MenuList";
+import { Outlet } from "react-router-dom";
 
 const drawerWidth = 200;
 
@@ -164,17 +165,7 @@ function Dashboard(props) {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-        </Typography>
+        <Outlet></Outlet>
       </Box>
     </Box>
   );
