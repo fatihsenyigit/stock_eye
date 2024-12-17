@@ -23,3 +23,5 @@ npm install veya yarn
 https://stock-app-tr.vercel.app/
 
 https://11116.fullstack.clarusway.com
+
+new laptop
