@@ -55,7 +55,7 @@ const MenuList = () => {
             disablePadding
             onClick={() => navigate(item.path)}
             sx={{
-              color: "white",
+              color: "white", 
               "& .MuiSvgIcon-root": { color: "white" },
               "& :hover": {
                 color: "red",

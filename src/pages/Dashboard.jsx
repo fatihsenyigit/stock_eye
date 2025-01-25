@@ -30,8 +30,6 @@
 
 // export default Dashboard
 
-
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -42,17 +40,17 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button"
-import { useSelector } from "react-redux"
-import useApiRequest from "../services/useApiRequest"
+import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
+import useApiRequest from "../services/useApiRequest";
 import MenuList from "../components/MenuList";
 import { Outlet } from "react-router-dom";
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
-     const {user} = useSelector((state) => state.auth)
-     const {logout} = useApiRequest()
+  const { user } = useSelector((state) => state.auth);
+  const { logout } = useApiRequest();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -75,10 +73,8 @@ function Dashboard(props) {
   const drawer = (
     <div>
       <Toolbar />
-      
-        <MenuList></MenuList>
-      
-      
+
+      <MenuList></MenuList>
     </div>
   );
 
@@ -172,6 +168,5 @@ function Dashboard(props) {
     </Box>
   );
 }
-
 
 export default Dashboard;

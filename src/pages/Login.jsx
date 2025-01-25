@@ -20,7 +20,14 @@ const Login = () => {
     email: string()
       .email("gecerli bir email giriniz")
       .required("email zorunludur"),
-    password: string().required().min(5, "must be at least 5 characters long"),
+    password: string()
+      .required()
+      .min(5, "must be at least 5 characters long")
+      .max(22, "en fazla 22 harf olmali")
+      .matches(/\d+/, 'en az bir rakam icermelidir')
+      .matches(/[a-z]+/, 'en az bir kucuk harf icermelidir')
+      .matches(/[A-Z]+/, 'en az bir buyuk harf icermelidir')
+      .matches(/[@$%&?!*]+/, "en az bunlardan birini(@$%&?!*) icermelidir"),
   });
   return (
     <Container maxWidth="lg">
