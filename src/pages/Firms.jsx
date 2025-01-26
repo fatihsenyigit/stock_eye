@@ -4,6 +4,7 @@ import useStockRequest from '../services/useStockRequest'
 
 const Firms = () => {
   const {getFirms} = useStockRequest()
+  
   useEffect(() => {
     getFirms()
   }, [])
