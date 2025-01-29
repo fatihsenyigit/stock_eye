@@ -1,18 +1,15 @@
-
-import React, { useEffect } from 'react'
-import useStockRequest from '../services/useStockRequest'
+import React, { useEffect, useSelector } from "react";
+import useStockRequest from "../services/useStockRequest";
 
 const Firms = () => {
-  const {getFirms} = useStockRequest()
-  
+  const { getStock } = useStockRequest();
+
   useEffect(() => {
-    getFirms()
-  }, [])
-  
+    getStock('firms')
+    getStock('sales')
+  }, []);
 
-  return (
-    <div>Firms</div>
-  )
-}
+  return <div>Firms</div>;
+};
 
-export default Firms
+export default Firms;
