@@ -14,7 +14,7 @@ const useStockRequest = () => {
   //   } catch (error) {
   //     dispatch(fetchFail());
   //   }
-  // };
+  // };  
 
   // const getSales = async () => {
   //   dispatch(fetchStart());
