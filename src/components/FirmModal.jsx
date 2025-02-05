@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import useStockRequest from "../services/useStockRequest";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -24,9 +26,26 @@ export default function FirmModal({ open, handleClose }) {
     image: "",
     address: "",
   });
+
+  useEffect(() => {
+    setInfo({
+      name: "",
+      phone: "",
+      image: "",
+      address: "",
+    })
+  }, [open])
+  
+
+  const {postStock} = useStockRequest()
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]:e.target.value });
   };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    postStock('firms', info)
+    handleClose()
+  }
   return (
     <div>
       <Modal
@@ -39,6 +58,7 @@ export default function FirmModal({ open, handleClose }) {
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component={"form"}
+            onSubmit={handleSubmit}
           >
             <TextField
               label="Firm Name"
@@ -48,6 +68,7 @@ export default function FirmModal({ open, handleClose }) {
               variant="outlined"
               value={info.name}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Phone"
@@ -57,6 +78,7 @@ export default function FirmModal({ open, handleClose }) {
               variant="outlined"
               value={info.phone}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Address"
@@ -66,6 +88,7 @@ export default function FirmModal({ open, handleClose }) {
               variant="outlined"
               value={info.address}
               onChange={handleChange}
+              required
             />
             <TextField
               label="Image"

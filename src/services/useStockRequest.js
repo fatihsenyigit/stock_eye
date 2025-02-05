@@ -1,6 +1,9 @@
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
 import { fetchFail, fetchStart, getStockSuccess } from "../features/stockSlice";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+
+
 
 const useStockRequest = () => {
   const { axiosToken } = useAxios();
@@ -37,7 +40,7 @@ const useStockRequest = () => {
     }
   };
 
-  const deleteStock = async (path, id) => {
+  const deleteStock = async (path= 'firms', id) => {
     dispatch(fetchStart())
     try {
       await axiosToken.delete(`/${path}/${id}`)
@@ -47,7 +50,19 @@ const useStockRequest = () => {
     }
   }
 
-  return { getStock, deleteStock };
+  const postStock = async (path= "firms", info) => {
+    dispatch(fetchStart())
+    try {
+      await axiosToken.post(`/${path}`, info)
+      getStock(path)
+      toastSuccessNotify(`${path} basariyla eklenmistir`)
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify(`${path} basariyla eklenmistir`)
+    }
+  }
+
+  return { getStock, deleteStock, postStock };
 };
 
 export default useStockRequest;
