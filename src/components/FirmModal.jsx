@@ -19,31 +19,37 @@ const style = {
   p: 4,
 };
 
-export default function FirmModal({ open, handleClose }) {
-  const [info, setInfo] = React.useState({
-    name: "",
-    phone: "",
-    image: "",
-    address: "",
-  });
+export default function FirmModal({ open, handleClose, info, setInfo }) {
+  // const [info, setInfo] = React.useState({
+  //   name: "",
+  //   phone: "",
+//   image: "",
+  //   address: "",
+  // });
 
-  useEffect(() => {
-    setInfo({
-      name: "",
-      phone: "",
-      image: "",
-      address: "",
-    })
-  }, [open])
+  // useEffect(() => {
+  //   setInfo({
+  //     name: "",
+  //     phone: "",
+  //     image: "",
+  //     address: "",
+  //   })
+  // }, [open])
   
 
-  const {postStock} = useStockRequest()
+  const {postStock, putStock} = useStockRequest()
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]:e.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault()
-    postStock('firms', info)
+    
+    if(info._id) {
+      putStock('firms', info)
+    } else {
+      postStock('firms', info)
+    }
+
     handleClose()
   }
   return (
@@ -100,7 +106,7 @@ export default function FirmModal({ open, handleClose }) {
               onChange={handleChange}
             />
             <Button variant="contained" type="submit">
-              ADD FIRM
+              {info._id? 'Update Firm': 'Add Firm'}
             </Button>
           </Box>
         </Box>

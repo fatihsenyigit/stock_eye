@@ -13,7 +13,26 @@ const Firms = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  
+  const [info, setInfo] = React.useState({
+    name: "",
+    phone: "",
+    image: "",
+    address: "",
+  });
+
+  
+  const handleClose = () => {
+    setOpen(false)
+    setInfo({
+      name: "",
+      phone: "",
+      image: "",
+      address: "",
+    })
+  };
+
+  
 
   useEffect(() => {
     getStock("firms");
@@ -33,12 +52,12 @@ const Firms = () => {
         New Firm
       </Button>
 
-      <FirmModal open={open} handleClose={handleClose}></FirmModal>
+      <FirmModal open={open} handleClose={handleClose} info={info} setInfo={setInfo}></FirmModal>
 
       <Grid container gap={2} mt={3} justifyContent={'center'}>
         {firms.map((firm)=> (
           <Grid item key={firm._id}>
-            <FirmCard firm={firm}></FirmCard>
+            <FirmCard firm={firm} handleOpen={handleOpen} setInfo={setInfo}></FirmCard>
           </Grid>
         ))}
       </Grid>
