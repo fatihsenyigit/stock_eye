@@ -2,40 +2,29 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import useStockRequest from "../services/useStockRequest";
-import { useEffect } from "react";
+import { modalStyle } from "../styles/globalStyles";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useSelector } from "react-redux";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function ProductModal({ open, handleClose, info, setInfo }) {
- 
-  const {postStock, putStock} = useStockRequest()
+  const { postStock } = useStockRequest();
+  const {categories} = useSelector((state)=> state.stock)
   const handleChange = (e) => {
-    setInfo({ ...info, [e.target.name]:e.target.value });
+    setInfo({ ...info, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    
-    if(info._id) {
-      putStock('firms', info)
-    } else {
-      postStock('firms', info)
-    }
+    e.preventDefault();
 
-    handleClose()
-  }
+    postStock("products", info);
+
+    handleClose();
+  };
   return (
     <div>
       <Modal
@@ -44,32 +33,26 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component={"form"}
             onSubmit={handleSubmit}
           >
-            <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
-              type="text"
-              variant="outlined"
-              value={info.name}
-              onChange={handleChange}
-              required
-            />
-            <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              value={info.phone}
-              onChange={handleChange}
-              required
-            />
+            <FormControl fullWidth>
+              <InputLabel id="categoryId">Categories</InputLabel>
+              <Select
+                labelId="categoryId"
+                id="categoryId"
+                name='categoryId'
+                label="Categories"
+                value={info.cateogryId}
+                onChange={handleChange}
+              >
+                {categories.map = (item) => <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>}            
+              </Select>
+            </FormControl>
+
             <TextField
               label="Address"
               name="address"
@@ -80,9 +63,9 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
               onChange={handleChange}
               required
             />
-            
+
             <Button variant="contained" type="submit">
-              {info._id? 'Update Firm': 'Add Firm'}
+              Add Product
             </Button>
           </Box>
         </Box>
