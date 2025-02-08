@@ -45,8 +45,10 @@ const useStockRequest = () => {
     try {
       await axiosToken.delete(`/${path}/${id}`)
       getStock(path)
+      toastSuccessNotify(`${path} basariyla silinmistir`)
     } catch (error) {
       dispatch(fetchFail())
+      toastErrorNotify(`${path} problem olustu`)
     }
   }
 
@@ -58,7 +60,7 @@ const useStockRequest = () => {
       toastSuccessNotify(`${path} basariyla eklenmistir`)
     } catch (error) {
       dispatch(fetchFail())
-      toastErrorNotify(`${path} basariyla eklenmistir`)
+      toastErrorNotify(`${path} problem olustu`)
     }
   }
 

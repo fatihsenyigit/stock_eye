@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 import useStockRequest from "../services/useStockRequest";
-import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal";
 
-const Firms = () => {
+const Products = () => {
   const { getStock } = useStockRequest();
-  const { firms } = useSelector((state) => state.stock);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
-  const [info, setInfo] = React.useState({
-    name: "",
-    phone: "",
-    image: "",
-    address: "",
-  });
+  const initialState = { categoryId: "", brandId: "", name: "" };
+
+  const [info, setInfo] = React.useState(initialState);
 
   const handleClose = () => {
     setOpen(false);
-    setInfo({
-      name: "",
-      phone: "",
-      image: "",
-      address: "",
-    });
+    setInfo(initialState);
   };
 
   useEffect(() => {
     getStock("products");
+    getStock("categories");
+    getStock("brands");
   }, []);
 
   return (
@@ -40,7 +32,7 @@ const Firms = () => {
         Products
       </Typography>
 
-      <Button variant="contained" onClick={handleOpen} sx={{mb:3}}>
+      <Button variant="contained" onClick={handleOpen} sx={{ mb: 3 }}>
         New Product
       </Button>
 
@@ -56,4 +48,4 @@ const Firms = () => {
   );
 };
 
-export default Firms;
+export default Products;

@@ -1,68 +1,79 @@
-
-
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-
-const columns = [
-  { field: '_id', headerName: '#', width: 90 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+import * as React from "react";
+import Box from "@mui/material/Box";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridDeleteForeverIcon,
+  GridToolbar
+} from "@mui/x-data-grid";
+import useStockRequest from "../services/useStockRequest";
+import { useSelector } from "react-redux";
 
 export default function ProductTable() {
+  const { deleteStock } = useStockRequest();
+  const { products } = useSelector((state) => state.stock);
+  const getRowId = (row) => row._id;
+
+  const columns = [
+    { field: "_id", headerName: "#", minwWidth: 100, flex: 1.2 },
+    {
+      field: "categoryId",
+      headerName: "Categories",
+      flex: 1,
+      minwWidth: 100,
+      valueGetter: (value, row) => row.categoryId?.name,
+    },
+    {
+      field: "brandId",
+      headerName: "Brands",
+      headerAlign: 'center',
+      width: 150,
+      flex: 1.2,
+      // editable: true,
+      // valueGetter: (value, row) => row.brandId?.name, buda olur
+      valueGetter: (value) => value?.name,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      headerAlign: 'center',
+      flex: 1,
+      minwWidth: 100,
+      // editable: true,
+    },
+    {
+      field: "quantity",
+      headerName: "Stock",
+      // sortable: true, 
+      headerAlign: 'center',
+      align: 'center',
+      width: 160,
+    },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Operations",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<GridDeleteForeverIcon />}
+          onClick={() => deleteStock("products", props.id)}
+          label="delete"
+        ></GridActionsCellItem>,
+      ],
+    },
+  ];
+
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
-        rows={rows}
+        autoHeight
+        rows={products}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
         checkboxSelection
         disableRowSelectionOnClick
+        getRowId={getRowId}
+        slots={{toolbar: GridToolbar}}
       />
     </Box>
   );
