@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 export default function ProductModal({ open, handleClose, info, setInfo }) {
   const { postStock } = useStockRequest();
-  const {categories} = useSelector((state)=> state.stock)
+  const {categories, brands} = useSelector((state)=> state.stock)
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
@@ -50,6 +50,20 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
                 onChange={handleChange}
               >
                 {categories.map = (item) => <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>}            
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id="brandId">Brands</InputLabel>
+              <Select
+                labelId="brandId"
+                id="brandId"
+                name='brandId'
+                label="Brands"
+                value={info.brandId}
+                onChange={handleChange}
+              >
+                {brands.map = (item) => <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>}            
               </Select>
             </FormControl>
 
