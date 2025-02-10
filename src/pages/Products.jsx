@@ -4,10 +4,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal";
+import { useSelector } from "react-redux";
+import { ErrorMessage } from "../components/DataFetchMessage";
 
 const Products = () => {
   const { getStock } = useStockRequest();
-
+  const { error } = useSelector((state) => state.stock);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
@@ -32,9 +34,16 @@ const Products = () => {
         Products
       </Typography>
 
-      <Button variant="contained" onClick={handleOpen} sx={{ mb: 3 }}>
+      <Button
+        variant="contained"
+        onClick={handleOpen}
+        sx={{ mb: 3 }}
+        disabled={error}
+      >
         New Product
       </Button>
+
+      {error && <ErrorMessage />}
 
       <ProductModal
         open={open}
@@ -43,7 +52,8 @@ const Products = () => {
         setInfo={setInfo}
       ></ProductModal>
 
-      <ProductTable></ProductTable>
+      {!error && <ProductTable></ProductTable>}
+      
     </div>
   );
 };

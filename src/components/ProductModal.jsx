@@ -48,6 +48,7 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
                 label="Categories"
                 value={info.cateogryId}
                 onChange={handleChange}
+                required
               >
                 {categories.map = (item) => <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>}            
               </Select>
@@ -62,18 +63,19 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
                 label="Brands"
                 value={info.brandId}
                 onChange={handleChange}
+                required
               >
                 {brands.map = (item) => <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>}            
               </Select>
             </FormControl>
 
             <TextField
-              label="Address"
-              name="address"
-              id="address"
+              label="name"
+              name="name"
+              id="name"
               type="text"
               variant="outlined"
-              value={info.address}
+              value={info.name}
               onChange={handleChange}
               required
             />

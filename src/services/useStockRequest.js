@@ -37,6 +37,7 @@ const useStockRequest = () => {
       dispatch(getStockSuccess({stockData, path}));
     } catch (error) {
       dispatch(fetchFail());
+      toastErrorNotify(`${path} problem olustu`)
     }
   };
 
@@ -71,6 +72,7 @@ const useStockRequest = () => {
       getStock(path)
     } catch (error) {
       dispatch(fetchFail())
+      toastErrorNotify(`${path} problem olustu`)
     }
   }
 
