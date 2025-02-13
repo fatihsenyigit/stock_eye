@@ -17,6 +17,7 @@ const stockSlice = createSlice({
   reducers: {
     fetchStart: (state) => {
       state.loading = true;
+      state.error = false
     },
 
     // getFirmsSuccess: (state, { payload }) => {
@@ -37,11 +38,13 @@ const stockSlice = createSlice({
     getStockSuccess: (state, {payload: {path, stockData}}) => {
       state.loading = false;
       state[path] = stockData;
+      // state.error = false;
     },
 
     fetchFail: (state) => {
       state.loading = false;
       state.error = true;
+
     },
   },
 });

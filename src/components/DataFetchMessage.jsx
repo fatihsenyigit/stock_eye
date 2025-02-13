@@ -1,18 +1,38 @@
-
-
-import React from 'react'
-import Alert from '@mui/material/Alert'
+import React from "react";
+import Alert from "@mui/material/Alert";
+import { Skeleton, Stack } from "@mui/material";
 
 export const ErrorMessage = () => {
-    return (
-        <Alert severity='error'> hata olustu</Alert>
-    )
-}
+  return <Alert sx={{mt: 3}} severity="error"> hata olustu</Alert>;
+};
 
-const DataFetchMessage =() => {
+export const NoDataMessage = () => {
+  return <Alert sx={{mt: 3}} severity="warning"> veri yok</Alert>;
+};
+
+export const CardSkeleton = ({children}) => {
   return (
-    <div>DataFetchMessage</div>
-  )
+    <Stack spacing={1} sx={{mt: 3}}>
+      <Skeleton variant="rectangular">
+         {children}
+      </Skeleton>
+      
+    </Stack>
+);
+
 }
 
-export default DataFetchMessage
+const TableSkeleton = () => {
+  return (
+      <Stack spacing={1} sx={{mt: 3}}>
+        <Skeleton variant="rectangular" width="100%" height={90} />
+        <Skeleton variant="rectangular" width="100%" height={45} />
+        <Skeleton variant="rectangular" width="100%" height={45} />
+        <Skeleton variant="rectangular" width="100%" height={45} />
+        <Skeleton variant="rectangular" width="100%" height={25} />
+      </Stack>
+  );
+};
+
+export default TableSkeleton;
+ 

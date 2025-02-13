@@ -11,7 +11,7 @@ import { btnStyle } from "../styles/globalStyles";
 import useStockRequest from "../services/useStockRequest";
 
 export default function FirmCard({ firm, handleOpen, setInfo }) {
-  const { address, _id, image, name, phone } = firm;
+  // const { address, _id, image, name, phone } = firm;
   const {deleteStock} = useStockRequest
   return (
     <Card
@@ -26,22 +26,22 @@ export default function FirmCard({ firm, handleOpen, setInfo }) {
         p: 2,
       }}
     >
-      <CardMedia sx={{ height: 140 }} image={image} title={name} />
+      <CardMedia sx={{ height: 140 }} image={firm?.image} title={firm?.name} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {name}
+          {firm?.name}
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {address}
+          {firm?.address}
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }} mt={2}>
-          {phone}
+          {firm?.phone}
         </Typography>
       </CardContent>
       <CardActions>
         <DeleteOutline
           sx={btnStyle}
-          onClick={() => deleteStock("firms", _id)}
+          onClick={() => deleteStock("firms", firm?._id)}
         ></DeleteOutline>
         <EditIcon sx={btnStyle} onClick={()=>{
           handleOpen()
