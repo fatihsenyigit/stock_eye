@@ -5,14 +5,19 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Box, Stack, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import { useSelector } from "react-redux";
 
 const KPICards = () => {
+
+    const {sales, purchases} = useSelector((state)=> state.stock)
+    const totalSales = sales?.reduce((acc, sale) => acc + sale.amount, 0)
+
   const kpiData = [
     {
       id: 1,
       title: "Sales",
       icon: <EuroIcon sx={{ fontSize: "2rem" }} />,
-      amount: "€12000",
+      amount: `€${totalSales}`,
       color: deepOrange[600],
       bgColor: deepOrange[200],
     },
