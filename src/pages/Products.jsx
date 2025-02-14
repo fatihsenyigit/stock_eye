@@ -43,9 +43,8 @@ const Products = () => {
       </Button>
 
       {loading && <TableSkeleton/>}
-      {error && <ErrorMessage />}
-      {!error && !loading && products.lenght > 0 && <ProductTable></ProductTable>}
-      {!error && !products.lenght && <NoDataMessage/>}
+      {!loading && products.lenght > 0 && <ProductTable></ProductTable>}
+      {!products.lenght && <NoDataMessage/>}
 
       <ProductModal
         open={open}
