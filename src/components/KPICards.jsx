@@ -4,13 +4,17 @@ import EuroIcon from "@mui/icons-material/Euro";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Box, Stack, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { deepOrange, deepPurple } from "@mui/material/colors";
+import { deepOrange } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 
 const KPICards = () => {
+  const { sales, purchases } = useSelector((state) => state.stock);
+  const totalSales = sales?.reduce((acc, sale) => acc + sale.amount, 0);
+  const totalPurchases = sales?.reduce(
+    (acc, purchase) => acc + purchase.amount,
+    0
+  );
 
-    const {sales, purchases} = useSelector((state)=> state.stock)
-    const totalSales = sales?.reduce((acc, sale) => acc + sale.amount, 0)
 
   const kpiData = [
     {
@@ -23,11 +27,20 @@ const KPICards = () => {
     },
     {
       id: 2,
+      title: "Purchases",
+      icon: <ShoppingBasketIcon sx={{ fontSize: "2rem" }} />,
+      amount: `€${totalPurchases}`,
+      color: deepOrange[600],
+      bgColor: deepOrange[200],
+    },
+
+    {
+      id: 2,
       title: "Profit",
       icon: <ShoppingBasketIcon sx={{ fontSize: "2rem" }} />,
-      amount: "€16000",
-      color: "purple",
-      bgColor: "pink",
+      amount: "€" + (totalSales - totalPurchases),
+      color: deepOrange[600],
+      bgColor: deepOrange[200],
     },
   ];
   return (
@@ -47,7 +60,7 @@ const KPICards = () => {
             width: 280,
             p: 2,
             justifyContent: "space-between",
-            gap: 2
+            gap: 2,
           }}
         >
           <Avatar

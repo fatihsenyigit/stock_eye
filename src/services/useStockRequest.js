@@ -1,9 +1,7 @@
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
-import { fetchFail, fetchStart, getStockSuccess } from "../features/stockSlice";
+import { fetchFail, fetchStart, getFourRequestSuccess, getStockSuccess } from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
-
-
 
 const useStockRequest = () => {
   const { axiosToken } = useAxios();
@@ -17,7 +15,7 @@ const useStockRequest = () => {
   //   } catch (error) {
   //     dispatch(fetchFail());
   //   }
-  // };  
+  // };
 
   // const getSales = async () => {
   //   dispatch(fetchStart());
@@ -29,54 +27,67 @@ const useStockRequest = () => {
   //   }
   // };
 
+  const getFourRequest = async () => {
+    dispatch(fetchStart());
+    try {
+      const [products, purchases, brands, firms] = await Promise.all([
+        await axiosToken("/products"),
+        await axiosToken("/purchases"),
+        await axiosToken("/brands"),
+        await axiosToken("/firms"),
+      ]);
+      dispatch(getFourRequestSuccess())
+    } catch (error) {}
+  };
+
   const getStock = async (path) => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosToken(`/${path}`);
-      const stockData = data.data
-      dispatch(getStockSuccess({stockData, path}));
+      const stockData = data.data;
+      dispatch(getStockSuccess({ stockData, path }));
     } catch (error) {
       dispatch(fetchFail());
-      toastErrorNotify(`${path} problem olustu`)
+      toastErrorNotify(`${path} problem olustu`);
     }
   };
 
-  const deleteStock = async (path= 'firms', id) => {
-    dispatch(fetchStart())
+  const deleteStock = async (path = "firms", id) => {
+    dispatch(fetchStart());
     try {
-      await axiosToken.delete(`/${path}/${id}`)
-      getStock(path)
-      toastSuccessNotify(`${path} basariyla silinmistir`)
+      await axiosToken.delete(`/${path}/${id}`);
+      getStock(path);
+      toastSuccessNotify(`${path} basariyla silinmistir`);
     } catch (error) {
-      dispatch(fetchFail())
-      toastErrorNotify(`${path} problem olustu`)
+      dispatch(fetchFail());
+      toastErrorNotify(`${path} problem olustu`);
     }
-  }
+  };
 
-  const postStock = async (path= "firms", info) => {
-    dispatch(fetchStart())
+  const postStock = async (path = "firms", info) => {
+    dispatch(fetchStart());
     try {
-      await axiosToken.post(`/${path}`, info)
-      getStock(path)
-      toastSuccessNotify(`${path} basariyla eklenmistir`)
+      await axiosToken.post(`/${path}`, info);
+      getStock(path);
+      toastSuccessNotify(`${path} basariyla eklenmistir`);
     } catch (error) {
-      dispatch(fetchFail())
-      toastErrorNotify(`${path} problem olustu`)
+      dispatch(fetchFail());
+      toastErrorNotify(`${path} problem olustu`);
     }
-  }
+  };
 
-  const putStock = async (path= 'firms', info) => {
-    dispatch(fetchStart())
+  const putStock = async (path = "firms", info) => {
+    dispatch(fetchStart());
     try {
-      await axiosToken.put(`/${path}/${info._id}`, info)
-      getStock(path)
+      await axiosToken.put(`/${path}/${info._id}`, info);
+      getStock(path);
     } catch (error) {
-      dispatch(fetchFail())
-      toastErrorNotify(`${path} problem olustu`)
+      dispatch(fetchFail());
+      toastErrorNotify(`${path} problem olustu`);
     }
-  }
+  };
 
-  return { getStock, deleteStock, postStock, putStock };
+  return { getStock, deleteStock, postStock, putStock, getFourRequest };
 };
 
 export default useStockRequest;
