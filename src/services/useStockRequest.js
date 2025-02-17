@@ -1,6 +1,6 @@
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
-import { fetchFail, fetchStart, getFourRequestSuccess, getStockSuccess } from "../features/stockSlice";
+import { fetchFail, fetchStart, getStockSuccess, getFourRequestSuccess } from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const useStockRequest = () => {
@@ -30,13 +30,17 @@ const useStockRequest = () => {
   const getFourRequest = async () => {
     dispatch(fetchStart());
     try {
-      const [products, purchases, brands, firms] = await Promise.all([
-        await axiosToken("/products"),
-        await axiosToken("/purchases"),
-        await axiosToken("/brands"),
-        await axiosToken("/firms"),
+      const [productS, purchaseS, brandS, firmS] = await Promise.all([
+         axiosToken("/products"),
+         axiosToken("/purchases"),
+         axiosToken("/brands"),
+         axiosToken("/firms"),
       ]);
-      dispatch(getFourRequestSuccess())
+      const products = productS?.data.data
+      const purchases = purchaseS?.data.data
+      const brands = brandS?.data.data
+      const firms = firmS?.data.data
+      dispatch(getFourRequestSuccess({products, purchases, brands, firms}))
     } catch (error) {}
   };
 

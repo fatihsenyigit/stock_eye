@@ -42,11 +42,11 @@ const stockSlice = createSlice({
     },
 
     getFourRequestSuccess: (state, {payload}) => {
-      state.loading = false,
-      state.products= 
-      state.purchases= 
-      state.brands= 
-      state.firms= 
+      state.loading = false
+      state.products= payload?.products
+      state.purchases= payload?.purchases
+      state.brands= payload?.brands
+      state.firms= payload?.firms
     },
 
     fetchFail: (state) => {
